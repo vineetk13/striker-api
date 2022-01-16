@@ -26,6 +26,6 @@ const strikeSchema = new mongoose.Schema({
     }
 })
 
-const Strike = mongoose.model("Strikes", strikeSchema)
+const Striker = mongoose.model("Striker", strikeSchema)
 
-module.exports = Strike
+module.exports = Striker

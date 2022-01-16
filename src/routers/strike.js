@@ -1,10 +1,10 @@
 const express = require("express")
 const res = require("express/lib/response")
-const Strike = require("../models/strike")
+const Striker = require("../models/strike")
 
 const router = express.Router()
 
-const mystrike = new Strike()
+const mystrike = new Striker()
 
 mystrike.save()
 
