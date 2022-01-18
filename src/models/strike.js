@@ -1,6 +1,10 @@
 const mongoose = require("mongoose")
 
 const strikeSchema = new mongoose.Schema({
+    owner: {
+        type: String,
+        required: true
+    },
     strike:{
         type: Number,
         default: 0

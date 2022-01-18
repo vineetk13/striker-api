@@ -4,14 +4,22 @@ const Striker = require("../models/strike")
 
 const router = express.Router()
 
-const mystrike = new Striker()
+let mystrike = null
 
-mystrike.save()
+Striker.find({owner: "vineetk13"},(err, doc) => {
+    if(err){
+        console.log('find documents error..!!!')
+        return 
+    }
+    if(doc.length>0){
+        mystrike = doc[0]
+    }
+    else{
+        mystrike = new Striker({owner: "vineetk13"})
+        mystrike.save()
+    }
+})
 
-const getUTCDate = (d) => {
-    const date = new Date(d)
-    return `${date.getYear()}-${date.getMonth()}-${date.getDate()}`
-}
 
 router.patch("/mystrike", (req, res) => {
     try{
