@@ -25,14 +25,10 @@ router.patch("/mystrike", async (req, res) => {
     }
 })
 
-router.get("/mystrike", (req, res) => {
+router.get("/mystrike", async (req, res) => {
     let mystrike = null
-
-    Striker.find({owner: "vineetk13"},(err, doc) => {
-        if(err){
-            console.log('find documents error..!!!')
-            return 
-        }
+    try{
+        const doc = await Striker.find({owner: "vineetk13"})
         if(doc.length>0){
             mystrike = doc[0]
         }
@@ -40,7 +36,11 @@ router.get("/mystrike", (req, res) => {
             mystrike = new Striker({owner: "vineetk13"})
             mystrike.save()
         }
-    })
+    }
+    catch(e){
+        res.status(404).send()
+    }
+    
 
     try{
         res.send(mystrike)
