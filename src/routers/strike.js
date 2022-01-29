@@ -4,24 +4,8 @@ const Striker = require("../models/strike")
 
 const router = express.Router()
 
-let mystrike = null
-
-Striker.find({owner: "vineetk13"},(err, doc) => {
-    if(err){
-        console.log('find documents error..!!!')
-        return 
-    }
-    if(doc.length>0){
-        mystrike = doc[0]
-    }
-    else{
-        mystrike = new Striker({owner: "vineetk13"})
-        mystrike.save()
-    }
-})
-
-
-router.patch("/mystrike", (req, res) => {
+router.patch("/mystrike", async (req, res) => {
+    const mystrike = await Striker.findOne({owner: "vineetk13"})
     try{
         mystrike.total = mystrike.total + 1
         if(req.body.hit){
@@ -42,6 +26,22 @@ router.patch("/mystrike", (req, res) => {
 })
 
 router.get("/mystrike", (req, res) => {
+    let mystrike = null
+
+    Striker.find({owner: "vineetk13"},(err, doc) => {
+        if(err){
+            console.log('find documents error..!!!')
+            return 
+        }
+        if(doc.length>0){
+            mystrike = doc[0]
+        }
+        else{
+            mystrike = new Striker({owner: "vineetk13"})
+            mystrike.save()
+        }
+    })
+
     try{
         res.send(mystrike)
     }
